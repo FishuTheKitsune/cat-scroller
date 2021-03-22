@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <style>
+        body {}
+        
+        #cat-container {}
+        
+        .cat-image {
+            display: block;
+            width: 80%;
+            margin: auto;
+            max-width: 800px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="cat-container">
+
+    </div>
+    <script>
+        function addCat() {
+            $.get('https://api.thecatapi.com/v1/images/search', function(data) {
+                let cat = data[0];
+                $('#cat-container').append(`<img src="${cat.url}" class="cat-image"/>`);
+
+            });
+        }
+
+        for (let i = 0; i < 20; i++) {
+            addCat();
+        }
+
+        $(window).scroll(function() {
+            // var eTop = $('#element').offset().top;
+            var scrollTop = $(window).scrollTop();
+
+            let catTop = $('.cat-image').last().position().top;
+            console.log(catTop)
+                // console.log(eTop);
+            console.log(scrollTop)
+            if (catTop - scrollTop <= 5000) {
+
+                for (let i = 0; i < 20; i++) {
+                    addCat();
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>
